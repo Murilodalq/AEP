@@ -1,0 +1,86 @@
+Cadastrar ação do PSE
+Ator: Usuário da equipe intersetorial.
+Pré-condições:
+
+O sistema deve estar em execução.
+O usuário deve acessar o menu de cadastro.
+Deve existir espaço disponível para armazenar uma nova ação.
+
+Fluxo principal:
+
+1. O usuário seleciona a opção "Cadastrar ação" no menu principal.
+2. O sistema solicita as informações necessárias(código, escola, tema, data prevista, público-alvo, responsável, quantidade prevista de participantes e situação inicial).
+3. O usuário preenche os campos solicitados.
+4. O sistema verifica a validade das informações inseridas.
+5. Caso os dados sejam válidos, o sistema registra a ação e apresenta uma mensagem de confirmação.
+Fluxos alternativos:
+
+Caso o código já esteja cadastrado, o sistema informa a duplicidade.
+Caso algum campo obrigatório esteja vazio ou apresente dados inválidos, o sistema solicita a correção.
+Caso o limite de armazenamento seja atingido, o sistema informa que não é possível realizar o cadastro.
+O usuário pode cancelar a operação antes de concluir o cadastro.
+
+Pós-condições: A nova ação estará cadastrada e disponível para consulta, pesquisa e atualização.
+
+Listar ações cadastradas
+Objetivo: Permitir a visualização de todas as ações cadastradas no sistema, facilitando o acompanhamento das atividades do PSE.
+Ator: Usuário da equipe intersetorial.
+Pré-condições:
+
+O sistema deve estar em execução.
+O usuário deve acessar o menu principal.
+Fluxo principal:
+
+1. O usuário seleciona a opção "Listar ações".
+2. O sistema consulta os registros armazenados.
+3. O sistema apresenta as ações cadastradas com suas respectivas informações.
+4. O usuário visualiza os registros e retorna ao menu principal.
+
+Fluxos alternativos:
+Caso nenhuma ação esteja cadastrada, o sistema apresenta uma mensagem informando que não existem registros disponíveis.
+
+Pós-condições: As ações cadastradas terão sido apresentadas ao usuário, sem alterações nos dados armazenados.
+
+Pesquisar ações
+Objetivo: Permitir que o usuário localize ações específicas por meio de filtros de pesquisa, facilitando o acesso às informações.
+Ator: Usuário da equipe intersetorial.
+Pré-condições:
+O sistema deve estar em execução.
+O usuário deve acessar a opção de pesquisa.
+
+Fluxo principal:
+O usuário seleciona a opção "Pesquisar ação".
+2. O sistema apresenta as opções de pesquisa por código, escola ou tema.
+3. O usuário escolhe um dos filtros e informa o valor desejado.
+4. O sistema realiza a busca entre as ações cadastradas.
+5. O sistema apresenta os registros correspondentes aos critérios informados.
+
+Fluxos alternativos:
+Usuário pode atualizar as situações para planejada, realizada ou cancelada.
+Usuário pode registrar a quantidade efetiva de participantes nas ações realizadas.
+Caso nenhuma ação corresponda ao filtro informado, o sistema apresenta uma mensagem indicando que nenhum registro foi encontrado.
+Caso o usuário informe uma opção de pesquisa inválida, o sistema solicita uma opção válida.
+
+Pós-condições: O usuário terá acesso às informações das ações encontradas.
+
+Gerar resumo ou relatório das ações
+Objetivo: Apresentar informações consolidadas sobre as atividades do PSE, permitindo acompanhar a quantidade de ações realizadas, planejadas ou canceladas e a participação do público.
+Ator: Usuário da equipe intersetorial.
+
+Pré-condições:
+O sistema deve estar em execução.
+O usuário deve acessar a opção de geração de relatório.
+Fluxo principal:
+
+O usuário seleciona a opção "Gerar relatório" no menu principal.
+2. O sistema consulta as ações cadastradas.
+3. O sistema contabiliza a quantidade de ações em cada situação: planejada, realizada e cancelada.
+4. O sistema calcula o total de participantes efetivos registrados.
+5. O sistema calcula o percentual de participação em relação à quantidade prevista.
+6. O sistema apresenta um resumo organizado com os resultados obtidos.
+
+Fluxos alternativos:
+Caso não existam ações cadastradas, o sistema informa a ausência de registros para o relatório.
+Caso não existam quantidades previstas que permitam o cálculo percentual, o sistema deve evitar a divisão por zero e informar que o indicador não está disponível.
+
+Pós-condições: O usuário terá acesso ao resumo das ações cadastradas e aos indicadores de participação, sem alterações nos registros existentes.
