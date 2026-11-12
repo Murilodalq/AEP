@@ -10,16 +10,16 @@ struct tp_acao{
 
 tp_acao acao, acoes[100];
 int userIn, prox=1;
-bool sair = false;
+bool sair = false, codigoEmUso = false;
 
 void menu(){
-	printf("1 - Cadastrar AÁ„o\n");
-	printf("2 - Consultar AÁıes\n");
-	printf("3 - Listar AÁıes\n");
-	printf("4 - Atualizar SituaÁ„o\n");
+	printf("1 - Cadastrar A√ß√£o\n");
+	printf("2 - Consultar A√ß√µes\n");
+	printf("3 - Listar A√ß√µes\n");
+	printf("4 - Atualizar Situa√ß√£o\n");
 	printf("5 - Gerar Resumo\n");
 	printf("6 - Sair do Sistema\n");
-	printf("Digite o n˙mero da aÁ„o que deseja realizar:\n");
+	printf("Digite o n√∫mero da a√ß√£o que deseja realizar:\n");
 }
 
 void cadastro(){
@@ -29,8 +29,18 @@ void cadastro(){
 		printf("Cadastro cheio!\n");
 		
 	}
-	printf("CÛdigo: \n");
-	scanf("%d", &acao.codigo);
+	do {
+		codigoEmUso = false;
+		printf("C√≥digo: \n");
+		scanf("%d", &acao.codigo);
+		for (int i=0; i <prox; i++){			
+			if (acao.codigo == acoes[i].codigo){
+				printf("Este c√≥digo j√° est√° cadastrado! Tente novamente.\n");
+				codigoEmUso = true;
+			}
+		}
+	} while (codigoEmUso == true);
+	codigoEmUso = false;
 	printf("Digite a escola:\n");
 	fflush(stdin);
 	fgets(acao.escola, 100, stdin);
@@ -39,19 +49,29 @@ void cadastro(){
 	fgets(acao.tema, 100, stdin);
 	printf("Digite o ano previsto: \n");
 	scanf("%d", &acao.ano);
-	printf("Digite o mes (n˙mero) previsto: \n");
-	scanf("%d", &acao.mes);
-	printf("Digite o dia previsto: \n");
-	scanf("%d", &acao.dia);
-	printf("Digite o p˙blico alvo:\n");
+	do {
+		printf("Digite o mes previsto: \n");
+		scanf("%d", &acao.mes);
+		if (acao.mes <1 || acao.mes >12){
+			printf("Por favor, digite um m√™s v√°lido!\n");
+		}
+	} while (acao.mes <1 || acao.mes >12);
+	do {
+		printf("Digite o dia previsto: \n");
+		scanf("%d", &acao.dia);
+		if (acao.dia <1 || acao.dia >31){
+			printf("Por favor, digite um dia v√°lido!\n");
+		}
+	} while (acao.dia <1 || acao.dia >31);
+	printf("Digite o p√∫blico alvo:\n");
 	fflush(stdin);
 	fgets(acao.publico, 100, stdin);
-	printf("Digite o respons·vel:\n");
+	printf("Digite o respons√°vel:\n");
 	fflush(stdin);
 	fgets(acao.responsavel, 100, stdin);
 	printf("Digite a quantidade prevista de participantes: \n");
 	scanf("%d", &acao.qtdParticipantes);
-	printf("indique a situaÁ„o inicial:\n1. Realizada\n2. Planejada\n3. Cancelada\n");
+	printf("indique a situa√ß√£o inicial:\n1. Realizada\n2. Planejada\n3. Cancelada\n");
 	scanf("%d", &op);
 	switch (op){
 			case 1:
@@ -66,7 +86,7 @@ void cadastro(){
 				strcpy(acao.situacao,"Cancelada");
 				break;
 			default:
-				printf("Digite uma opÁ„o v·lida da prÛxima vez!\n");
+				printf("Digite uma op√ß√£o v√°lida da pr√≥xima vez!\n");
 				break;
 	}
 	acoes[prox - 1] = acao;
@@ -77,25 +97,25 @@ void consulta(){
 	setlocale(LC_ALL, "Portuguese");
 	int op, pesqCod, comp;
 	char pesqOutro[100];
-	printf("pesquisar por:\n1. CÛdigo\n2. Escola\n3. Tema\n");
+	printf("pesquisar por:\n1. C√≥digo\n2. Escola\n3. Tema\n");
 	scanf("%d", &op);
 	system("CLS");
 	switch (op){
 		case 1:
-			printf("Digite o cÛdigo da aÁ„o que deseja pesquisar:\n");
+			printf("Digite o c√≥digo da a√ß√£o que deseja pesquisar:\n");
 			scanf("%d", &pesqCod);
 			for (int i=0; i <prox; i++){			
 				if (pesqCod == acoes[i].codigo){		
-					printf("\n=======AÁ„o=======\n");
-					printf("CÛdigo: %d\n", acoes[i].codigo);
+					printf("\n=======A√ß√£o=======\n");
+					printf("C√≥digo: %d\n", acoes[i].codigo);
 					printf("Escola: %s\n", acoes[i].escola);
 					printf("Tema: %s\n", acoes[i].tema);
 					printf("Data: %d/%d/%d\n", acoes[i].dia, acoes[i].mes, acoes[i].ano);
-					printf("P˙blico alvo: %s\n", acoes[i].publico);
-					printf("Respons·vel: %s\n", acoes[i].responsavel);
+					printf("P√∫blico alvo: %s\n", acoes[i].publico);
+					printf("Respons√°vel: %s\n", acoes[i].responsavel);
 					printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
 					printf("Quantidade de participantes presentes: %d\n", acoes[i].qtdPresentes);
-					printf("SituaÁ„o: %s\n", acoes[i].situacao);
+					printf("Situa√ß√£o: %s\n", acoes[i].situacao);
 					printf("==================\n");
 				}
 			}
@@ -108,15 +128,15 @@ void consulta(){
 			for (int i=0; i <prox; i++){
 			comp = strcmp(pesqOutro, acoes[i].escola);			
 				if (comp == 0){		
-					printf("\n=======AÁ„o=======\n");
-					printf("CÛdigo: %d\n", acoes[i].codigo);
+					printf("\n=======A√ß√£o=======\n");
+					printf("C√≥digo: %d\n", acoes[i].codigo);
 					printf("Escola: %s\n", acoes[i].escola);
 					printf("Tema: %s\n", acoes[i].tema);
 					printf("Data: %d/%d/%d\n", acoes[i].dia, acoes[i].mes, acoes[i].ano);
-					printf("P˙blico alvo: %s\n", acoes[i].publico);
-					printf("Respons·vel: %s\n", acoes[i].responsavel);
+					printf("P√∫blico alvo: %s\n", acoes[i].publico);
+					printf("Respons√°vel: %s\n", acoes[i].responsavel);
 					printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
-					printf("SituaÁ„o: %s\n", acoes[i].situacao);
+					printf("Situa√ß√£o: %s\n", acoes[i].situacao);
 					printf("==================\n");
 				}
 			}
@@ -129,21 +149,21 @@ void consulta(){
 			for (int i=0; i <prox; i++){
 			comp = strcmp(pesqOutro, acoes[i].tema);			
 				if (comp == 0){		
-					printf("\n=======AÁ„o=======\n");
-					printf("CÛdigo: %d\n", acoes[i].codigo);
+					printf("\n=======A√ß√£o=======\n");
+					printf("C√≥digo: %d\n", acoes[i].codigo);
 					printf("Escola: %s\n", acoes[i].escola);
 					printf("Tema: %s\n", acoes[i].tema);
 					printf("Data: %d/%d/%d\n", acoes[i].dia, acoes[i].mes, acoes[i].ano);
-					printf("P˙blico alvo: %s\n", acoes[i].publico);
-					printf("Respons·vel: %s\n", acoes[i].responsavel);
+					printf("P√∫blico alvo: %s\n", acoes[i].publico);
+					printf("Respons√°vel: %s\n", acoes[i].responsavel);
 					printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
-					printf("SituaÁ„o inicial: %s\n", acoes[i].situacao);
+					printf("Situa√ß√£o inicial: %s\n", acoes[i].situacao);
 					printf("==================\n");
 				}
 			}
 			break;
 		default:
-			printf("Digite um valor v·lido!\n");
+			printf("Digite um valor v√°lido!\n");
 			break;
 	}
 	system("pause");
@@ -152,15 +172,15 @@ void consulta(){
 void lista(){
 	setlocale(LC_ALL, "Portuguese");
 	for (int i=0; i < prox-1; i++){
-		printf("\n=======AÁ„o=======\n");
-				printf("CÛdigo: %d\n", acoes[i].codigo);
+		printf("\n=======A√ß√£o=======\n");
+				printf("C√≥digo: %d\n", acoes[i].codigo);
 				printf("Escola: %s\n", acoes[i].escola);
 				printf("Tema: %s\n", acoes[i].tema);
 				printf("Data: %d/%d/%d\n", acoes[i].dia, acoes[i].mes, acoes[i].ano);
-				printf("P˙blico alvo: %s\n", acoes[i].publico);
-				printf("Respons·vel: %s\n", acoes[i].responsavel);
+				printf("P√∫blico alvo: %s\n", acoes[i].publico);
+				printf("Respons√°vel: %s\n", acoes[i].responsavel);
 				printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
-				printf("SituaÁ„o inicial: %s\n", acoes[i].situacao);
+				printf("Situa√ß√£o inicial: %s\n", acoes[i].situacao);
 				printf("==================\n");
 	}
 	system("pause");
@@ -170,31 +190,31 @@ void atualiza(){
 	setlocale(LC_ALL, "Portuguese");
 	int codAcao, op, qtdAtualizada;
 
-	printf("Digite o cÛdigo da aÁ„o que deseja atualizar:\n");
+	printf("Digite o c√≥digo da a√ß√£o que deseja atualizar:\n");
 	scanf("%d", &codAcao);
 	for (int i=0; i <prox; i++){			
 		if (codAcao == acoes[i].codigo){		
-			printf("\n=======AÁ„o=======\n");
-			printf("CÛdigo: %d\n", acoes[i].codigo);
+			printf("\n=======A√ß√£o=======\n");
+			printf("C√≥digo: %d\n", acoes[i].codigo);
 			printf("Escola: %s\n", acoes[i].escola);
 			printf("Tema: %s\n", acoes[i].tema);
 			printf("Data: %d/%d/%d\n", acoes[i].dia, acoes[i].mes, acoes[i].ano);
-			printf("P˙blico alvo: %s\n", acoes[i].publico);
-			printf("Respons·vel: %s\n", acoes[i].responsavel);
+			printf("P√∫blico alvo: %s\n", acoes[i].publico);
+			printf("Respons√°vel: %s\n", acoes[i].responsavel);
 			printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
-			printf("SituaÁ„o inicial: %s\n", acoes[i].situacao);
+			printf("Situa√ß√£o inicial: %s\n", acoes[i].situacao);
 			printf("==================\n");
 			codAcao = i;
 		}
 	}
-		printf("Atualizar situaÁ„o para?:\n1. Realizada\n2. Planejada\n3. Cancelada\n");
+		printf("Atualizar situa√ß√£o para?:\n1. Realizada\n2. Planejada\n3. Cancelada\n");
 		scanf("%d", &op);
 		switch (op){
 			case 1:
 				strcpy(acao.situacao,"Realizada");
 				printf("Atualizada com sucesso!\n");
 				printf("Qual a quantidade efetiva de participantes?\n");
-				scanf("%d", qtdAtualizada);
+				scanf("%d", &qtdAtualizada);
 				acoes[codAcao].qtdPresentes = qtdAtualizada;
 				break;
 			case 2:
@@ -206,7 +226,7 @@ void atualiza(){
 				printf("Atualizada com sucesso!\n");
 				break;
 			default:
-				printf("Digite uma opÁ„o v·lida da prÛxima vez!\n");
+				printf("Digite uma op√ß√£o v√°lida da pr√≥xima vez!\n");
 				break;
 		}
 	system("pause");
@@ -234,11 +254,11 @@ void resume(){
 	}
 	percentParticipacao = totalParticipantes / totalPrevisto;
 	printf("=========Resumo=========\n");
-	printf("AÁıes Realizadas: %d\n", qtdRealizada);
-	printf("AÁıes Planejadas: %d\n", qtdPlanejada);
-	printf("AÁıes Canceladas: %d\n", qtdCancelada);
+	printf("A√ß√µes Realizadas: %d\n", qtdRealizada);
+	printf("A√ß√µes Planejadas: %d\n", qtdPlanejada);
+	printf("A√ß√µes Canceladas: %d\n", qtdCancelada);
 	printf("Total de participantes: %.0f\n", totalParticipantes);
-	printf("ParticipaÁ„o: %.1f%%\n", percentParticipacao*100);
+	printf("Participa√ß√£o: %.1f%%\n", percentParticipacao*100);
 	printf("========================\n");
 	system("pause");
 }
@@ -274,7 +294,7 @@ main(){
 				sair = true;
 				break;
 			default:
-				printf("Digite um valor v·lido!\n");
+				printf("Digite um valor v√°lido!\n");
 				break;
 		}
 	}
