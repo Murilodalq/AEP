@@ -25,6 +25,7 @@ void menu(){
 void cadastro(){
 	setlocale(LC_ALL, "Portuguese");
 	int op;
+	acao.qtdPresentes =0;
 	if (prox > 100){
 		printf("Cadastro cheio!\n");
 		
@@ -136,6 +137,7 @@ void consulta(){
 					printf("Público alvo: %s\n", acoes[i].publico);
 					printf("Responsável: %s\n", acoes[i].responsavel);
 					printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
+					printf("Quantidade de participantes presentes: %d\n", acoes[i].qtdPresentes);
 					printf("Situação: %s\n", acoes[i].situacao);
 					printf("==================\n");
 				}
@@ -157,6 +159,7 @@ void consulta(){
 					printf("Público alvo: %s\n", acoes[i].publico);
 					printf("Responsável: %s\n", acoes[i].responsavel);
 					printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
+					printf("Quantidade de participantes presentes: %d\n", acoes[i].qtdPresentes);
 					printf("Situação inicial: %s\n", acoes[i].situacao);
 					printf("==================\n");
 				}
@@ -180,6 +183,7 @@ void lista(){
 				printf("Público alvo: %s\n", acoes[i].publico);
 				printf("Responsável: %s\n", acoes[i].responsavel);
 				printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
+				printf("Quantidade de participantes presentes: %d\n", acoes[i].qtdPresentes);
 				printf("Situação inicial: %s\n", acoes[i].situacao);
 				printf("==================\n");
 	}
@@ -202,6 +206,7 @@ void atualiza(){
 			printf("Público alvo: %s\n", acoes[i].publico);
 			printf("Responsável: %s\n", acoes[i].responsavel);
 			printf("Quantidade prevista de participantes: %d\n", acoes[i].qtdParticipantes);
+			printf("Quantidade de participantes presentes: %d\n", acoes[i].qtdPresentes);
 			printf("Situação inicial: %s\n", acoes[i].situacao);
 			printf("==================\n");
 			codAcao = i;
@@ -211,18 +216,18 @@ void atualiza(){
 		scanf("%d", &op);
 		switch (op){
 			case 1:
-				strcpy(acao.situacao,"Realizada");
+				strcpy(acoes[codAcao].situacao,"Realizada");
 				printf("Atualizada com sucesso!\n");
 				printf("Qual a quantidade efetiva de participantes?\n");
 				scanf("%d", &qtdAtualizada);
 				acoes[codAcao].qtdPresentes = qtdAtualizada;
 				break;
 			case 2:
-				strcpy(acao.situacao,"Planejada");
+				strcpy(acoes[codAcao].situacao,"Planejada");
 				printf("Atualizada com sucesso!\n");
 				break;
 			case 3:
-				strcpy(acao.situacao,"Cancelada");
+				strcpy(acoes[codAcao].situacao,"Cancelada");
 				printf("Atualizada com sucesso!\n");
 				break;
 			default:
